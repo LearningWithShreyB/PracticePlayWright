@@ -3,7 +3,7 @@ import { test, expect, Locator } from "@playwright/test";
 test("Verify CSS Locators", async ({ page }) => {
     await page.goto("https://demowebshop.tricentis.com/");
 
-    // logo
+    /* // logo
     const tag1: Locator = page.locator("img[alt='Tricentis Demo Web Shop']");
     await expect(tag1).toBeVisible();
 
@@ -32,7 +32,29 @@ test("Verify CSS Locators", async ({ page }) => {
 
     // Products ending with "/build" in href attribute
     const tag4:Locator=page.locator("h2>a[href$='op']");
-    await expect(tag4).toHaveText('14.1-inch Laptop')
+    await expect(tag4).toHaveText('14.1-inch Laptop');
+
+
+    // Login link using CSS selector with exact text match
+
+    await expect(page.locator("a[href='/login']")).toBeVisible(); */
+
+    // Getting multiple elements handling
+    const tag5:Locator=page.locator("[type='button'][value='Subscribe']");
+    console.log("Value of element",tag5);
+    await expect(tag5).toBeVisible();
+
+
+    const tag6:Locator=page.locator("[type='button']");
+    const totalElements:string[]=await tag6.allTextContents();
+    
+    for(let value of totalElements)
+    {
+        console.log(value);
+    }
+
+    await expect(tag6.first()).toHaveText("Subscribe");
+    
 
     /* // tag[attribute=value]
     page.goto("https://www.google.com/");
