@@ -11,12 +11,12 @@ test("Verify XPath Locators", async ({page})=>
     // 2. parent axis - Get parent <tr> of the "Mexico" cell
     const tag11:Locator=await page.locator("//td[text()='Mexico']/parent::tr");
     await expect(tag11).toContainText("Francisco Chang");
-/*
-    // 3. XPath with contains() 
-    const tag2: Locator = page.locator('//h2//a[contains(@href, "computer")]');
-    await expect(tag2).toHaveCount(4);
 
-     // 4. XPath with starts-with()
+    // 3. child axis - Get all <td> children of the third <tr> in the table
+    const tag2: Locator = page.locator("//table[@id='customers']//tr[3]/child::td");
+    await expect(tag2).toHaveCount(3);
+
+   /*  // 4. XPath with starts-with()
     const tag3:Locator=page.locator("//h2//a[starts-with(@href,'/build')]");
     const totalCount:number=await tag3.count();
     expect(totalCount).toBeGreaterThan(0);
