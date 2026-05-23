@@ -40,12 +40,13 @@ test("Verify CSS Locators", async ({ page }) => {
     await expect(page.locator("a[href='/login']")).toBeVisible(); */
 
     // Getting multiple elements handling
-    const tag5:Locator=page.locator("[type='button'][value='Subscribe']");
-    console.log("Value of element",tag5);
+    const tag5:Locator=page.locator("[style='font-size:100%;'][href$='rel']");
+    const text:string=await tag5.textContent();
+    console.log("Value of element:",text);
     await expect(tag5).toBeVisible();
 
 
-    const tag6:Locator=page.locator("[type='button']");
+    const tag6:Locator=page.locator("[style='font-size:100%;']");
     const totalElements:string[]=await tag6.allTextContents();
     
     for(let value of totalElements)
@@ -53,22 +54,8 @@ test("Verify CSS Locators", async ({ page }) => {
         console.log(value);
     }
 
-    await expect(tag6.first()).toHaveText("Subscribe");
-    
-
-    /* // tag[attribute=value]
-    page.goto("https://www.google.com/");
-    const tag3: Locator = page.locator("[role='img']");
-    await expect(tag3).toBeVisible();
-    await page.waitForTimeout(2000);
-
-    //tag.class[attribute=value]
-    await expect(page.locator(".gb_4[aria-label='Search for Images ']")).toBeVisible();
-    await page.waitForTimeout(2000);
-
-    const tag4: Locator = page.locator(".gLFyf[title='Search']");
-    await tag4.fill("Playwright");
-    await expect(tag4).toBeVisible();
-    await page.waitForTimeout(2000); */
+    await expect(tag6.first()).toHaveText("apparel");
+    await expect(tag6.last()).toHaveText("computer");
+ 
 
 })
