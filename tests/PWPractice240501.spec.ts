@@ -22,12 +22,15 @@ test("Verify XPath Locators", async ({page})=>
     expect(totalCount).toBeGreaterThan(0);
     await expect(tag3).toHaveCount(3);
 
-    /*
-    // Products ending with "/build" in href attribute
-    const tag4:Locator=page.locator("h2>a[href$='op']");
-    await expect(tag4).toHaveText('14.1-inch Laptop');
+    // 5. XPath with last()
 
+    const tag4:Locator=page.locator("(//h2[@class='product-title']/a)[last()]");
+    await expect(tag4).toHaveText('Simple Computer');
 
+    // 6. XPath with text()
+
+    await expect(page.locator("//a[text()='Log in']")).toBeVisible(); 
+/*
     // Login link using CSS selector with exact text match
 
     await expect(page.locator("a[href='/login']")).toBeVisible(); 
