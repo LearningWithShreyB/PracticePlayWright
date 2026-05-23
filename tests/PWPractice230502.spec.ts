@@ -24,6 +24,16 @@ test("Verify CSS Locators", async ({ page }) => {
         console.log(value);
     }
 
+    // Products starting with "/build" in href attribute
+    const tag3:Locator=page.locator("h2>a[href^='/build']");
+    const totalCount:number=await tag3.count();
+    expect(totalCount).toBeGreaterThan(0);
+    await expect(tag3).toHaveCount(3);
+
+    // Products ending with "/build" in href attribute
+    const tag4:Locator=page.locator("h2>a[href$='op']");
+    await expect(tag4).toHaveText('14.1-inch Laptop')
+
     /* // tag[attribute=value]
     page.goto("https://www.google.com/");
     const tag3: Locator = page.locator("[role='img']");
