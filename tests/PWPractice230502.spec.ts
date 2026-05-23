@@ -41,8 +41,10 @@ test("Verify CSS Locators", async ({ page }) => {
 
     // Getting multiple elements handling
     const tag5:Locator=page.locator("[style='font-size:100%;'][href$='rel']");
-    const text:string=await tag5.textContent();
-    console.log("Value of element:",text);
+    //const tag5:Locator=page.locator("a:not([style='font-size:100%;'])[href$='rel']");
+    //const tag5 = page.locator("a[href$='rel']:not([style='font-size:100%;'])");
+    //const text:string|null=await tag5.textContent();
+    //console.log("Value of element:",text);
     await expect(tag5).toBeVisible();
 
 
@@ -56,6 +58,9 @@ test("Verify CSS Locators", async ({ page }) => {
 
     await expect(tag6.first()).toHaveText("apparel");
     await expect(tag6.last()).toHaveText("computer");
+
+
+
  
 
 })
