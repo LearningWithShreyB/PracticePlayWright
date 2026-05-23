@@ -10,8 +10,19 @@ test("Verify CSS Locators", async ({ page }) => {
     // Products containing "computer" in href attribute
     const tag2: Locator = page.locator("h2>a[href*='computer']");
     console.log("Names of computer related products: ", await tag2.allTextContents());
+    console.log("First value: ", await tag2.first().textContent());
+    console.log("Second value: ", await tag2.nth(1).textContent());
+    console.log("Third value: ", await tag2.nth(2).textContent());
+    console.log("Fourth value: ", await tag2.last().textContent());
     console.log("Total Number of computer related products: ", await tag2.count());
     await expect(tag2).toHaveCount(4);
+
+    let totalProducts:Array<string> = await tag2.allTextContents();
+
+    for(let value of totalProducts)
+    {
+        console.log(value);
+    }
 
     /* // tag[attribute=value]
     page.goto("https://www.google.com/");
