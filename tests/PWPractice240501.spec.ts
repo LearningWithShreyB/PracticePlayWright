@@ -30,31 +30,12 @@ test("Verify XPath Locators", async ({page})=>
     // 6. XPath with text()
 
     await expect(page.locator("//a[text()='Log in']")).toBeVisible(); 
-/*
-    // Login link using CSS selector with exact text match
 
-    await expect(page.locator("a[href='/login']")).toBeVisible(); 
+    // 7. XPath with position()
+    const tag5:Locator=page.locator("//div[@class='column follow-us']//li[position()='3']");
+    await expect(tag5).toHaveText("RSS");
 
-    // Getting multiple elements handling
-    const tag5:Locator=page.locator("[style='font-size:100%;'][href$='rel']");
-    //const tag5:Locator=page.locator("a:not([style='font-size:100%;'])[href$='rel']");
-    //const tag5 = page.locator("a[href$='rel']:not([style='font-size:100%;'])");
-    //const text:string|null=await tag5.textContent();
-    //console.log("Value of element:",text);
-    await expect(tag5).toBeVisible();
-
-
-    const tag6:Locator=page.locator("[style='font-size:100%;']");
-    const totalElements:string[]=await tag6.allTextContents();
-    
-    for(let value of totalElements)
-    {
-        console.log(value);
-    }
-
-    await expect(tag6.first()).toHaveText("apparel");
-    await expect(tag6.last()).toHaveText("computer");
-
-        */
+    const tag6:string=await page.locator("//div[@class='column follow-us']//li[position()='3']").innerText();
+    expect(tag6).toBe('RSS');
 
 })
