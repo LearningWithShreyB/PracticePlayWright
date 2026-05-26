@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 //import requestBody from "../../testdata/post_request_body.json" with { type: "json" };
 import requestBody from "../../testdata/post_request_body.json"// with { type: "json" };
 
-test.only("POST Request Using JSON File", async ({ request }) => {
+test("POST Request Using JSON File", async ({ request }) => {
 
     //requestBody Formation
     //const requestBody = await import("../../testdata/post_request_body.json");
