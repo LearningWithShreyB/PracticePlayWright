@@ -34,13 +34,13 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
 
     const postRequestBody = structuredClone(postSourceRequestBody);
 
-    const postResponse = await request.post('/auth',
+    const postResponse = await request.post('/booking',
         {
             data: postRequestBody
         }
     );
 
-    const postResponseBody = await tokenResponse.json();
+    const postResponseBody = await postResponse.json();
     console.log('The response of POST request is:');
     console.log(postResponseBody);
 
@@ -48,7 +48,7 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
     expect(postResponse.ok()).toBeTruthy();
     expect(postResponse.status()).toBe(200);
 
-   // expect(postResponseBody).toHaveProperty('bookingid');
+    expect(postResponseBody).toHaveProperty("bookingid");
     console.log('All assertions successfully done.');
 
     const bookingID = postResponseBody.bookingid;
