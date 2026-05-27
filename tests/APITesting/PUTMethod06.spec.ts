@@ -24,6 +24,7 @@ test('Verifying PUT Method', async ({ request }) => {
     const postResponse = await request.post('/booking', { data: postRequestBody });
     const postResponseBody = await postResponse.json();
     //console.log(`Post Method Response ====> ${postResponseBody}`);
+    console.log("The response of Post request:");
     console.log(postResponseBody);
 
     expect(postResponse.ok()).toBeTruthy();
@@ -49,6 +50,7 @@ test('Verifying PUT Method', async ({ request }) => {
 
     const putResponseBody = await putResponse.json();
     //console.log(`Put Method Response ====> ${putResponseBody}`);
+    console.log("The response of Put request:");
     console.log(putResponseBody);
 
     expect(putResponse.ok()).toBeTruthy();
