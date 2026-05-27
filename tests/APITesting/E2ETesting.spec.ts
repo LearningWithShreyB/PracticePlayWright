@@ -72,4 +72,26 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
     expect(getResponseBody.firstname).toBe(postResponseBody.booking.firstname);
     console.log('All assertions successfully done.');
 
+    console.log('\nGET request successfully done');
+
+    console.log("\nDELETE request initiated");
+
+    const deleteResponse=await request.delete(`/booking/${bookingID}`,
+        {
+            headers:
+            {
+                "Cookie" : `token=${tokenResult}`
+            }
+        }
+    );
+
+    console.log("\nPerforming some assertions");
+    expect(deleteResponse.ok()).toBeTruthy();
+    expect(deleteResponse.statusText()).toBe('Created');
+    expect(deleteResponse.status()).toBe(201);
+
+    console.log('All assertions successfully done.');
+
+    console.log('\nDELETE request successfully done');
+
 })
