@@ -94,4 +94,25 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
 
     console.log('\nDELETE request successfully done');
 
+    console.log("\nDELETE request initiated again after deletion");//16633
+
+    const deleteResponse01=await request.delete(`/booking/${bookingID}`,
+        {
+            headers:
+            {
+                "Cookie" : `token=${tokenResult}`
+            }
+        }
+    );
+
+    console.log("\nPerforming some assertions");
+    expect(deleteResponse01.statusText()).toBe('Method Not Allowed');
+    expect(deleteResponse01.status()).toBe(405);
+
+    console.log('All assertions successfully done.');
+
+    console.log('\nDELETE request successfully done');
+
+    
+
 })
