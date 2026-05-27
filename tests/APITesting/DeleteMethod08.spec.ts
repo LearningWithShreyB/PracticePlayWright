@@ -49,9 +49,4 @@ test("POST Request Using JSON File", async ({ request }) => {
     expect(deleteResponse.statusText()).toBe('Created');
     expect(deleteResponse.status()).toBe(201);
 
-
-
-
-
-
 })
