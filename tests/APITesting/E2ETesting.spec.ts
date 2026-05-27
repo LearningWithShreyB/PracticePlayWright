@@ -15,7 +15,7 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
     );
 
     const tokenResponseBody = await tokenResponse.json();
-    console.log('The response of POST request is:');
+    console.log('\nThe response of POST request is:');
     console.log(tokenResponseBody);
 
     console.log("Performing some assertions:");
@@ -41,7 +41,7 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
     );
 
     const postResponseBody = await postResponse.json();
-    console.log('The response of POST request is:');
+    console.log('\nThe response of POST request is:');
     console.log(postResponseBody);
 
     console.log("Performing some assertions:");
@@ -56,5 +56,20 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
 
     console.log('\nPOST request successfully done');
 
+    console.log("\nGET request initiated");
+
+    const getResponse=await request.get(`/booking/${bookingID}`);
+
+    const getResponseBody=await getResponse.json();
+
+    console.log('\nThe response of GET request is:');
+    console.log(getResponseBody);
+
+    console.log("Performing some assertions");
+    expect(getResponse.ok()).toBeTruthy();
+    expect(getResponse.status()).toBe(200);
+
+    expect(getResponseBody.firstname).toBe(postResponseBody.booking.firstname);
+    console.log('All assertions successfully done.');
 
 })
