@@ -71,7 +71,7 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
 
     console.log('\nPOST request successfully done');
 
-    console.log("\nGET request initiated");
+    console.log("\nGET request initiated for Post Method");
 
     const getResponse = await request.get(`/booking/${bookingID}`);
 
@@ -85,6 +85,23 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
     expect(getResponse.status()).toBe(200);
 
     expect(getResponseBody.firstname).toBe(postResponseBody.booking.firstname);
+
+    expect(getResponseBody).toMatchObject(
+        {
+            firstname: postRequestBody.firstname,
+            lastname: postRequestBody.lastname,
+            totalprice: postRequestBody.totalprice,
+            depositpaid: postRequestBody.depositpaid,
+            additionalneeds: postRequestBody.additionalneeds
+        }
+    );
+
+    expect(getResponseBody.bookingdates).toMatchObject(
+        {
+            checkin: postRequestBody.bookingdates.checkin,
+            checkout: postRequestBody.bookingdates.checkout
+        }
+    )
     console.log('All assertions successfully done.');
 
     console.log('\nGET request successfully done');
