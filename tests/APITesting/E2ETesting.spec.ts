@@ -49,6 +49,21 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
     expect(postResponse.status()).toBe(200);
 
     expect(postResponseBody).toHaveProperty("bookingid");
+
+    const booking = postResponseBody.booking;
+    expect(booking).toMatchObject(
+        {
+            firstname: postRequestBody.firstname,
+            lastname: postRequestBody.lastname,
+            totalprice: postRequestBody.totalprice,
+            depositpaid: postRequestBody.depositpaid,
+            additionalneeds: postRequestBody.additionalneeds
+        }
+    );
+    expect(booking.bookingdates).toMatchObject({
+        checkin: postRequestBody.bookingdates.checkin,
+        checkout: postRequestBody.bookingdates.checkout,
+    });
     console.log('All assertions successfully done.');
 
     const bookingID = postResponseBody.bookingid;
@@ -58,9 +73,9 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
 
     console.log("\nGET request initiated");
 
-    const getResponse=await request.get(`/booking/${bookingID}`);
+    const getResponse = await request.get(`/booking/${bookingID}`);
 
-    const getResponseBody=await getResponse.json();
+    const getResponseBody = await getResponse.json();
 
     console.log('\nThe response of GET request is:');
     console.log(getResponseBody);
@@ -76,11 +91,11 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
 
     console.log("\nDELETE request initiated");
 
-    const deleteResponse=await request.delete(`/booking/${bookingID}`,
+    const deleteResponse = await request.delete(`/booking/${bookingID}`,
         {
             headers:
             {
-                "Cookie" : `token=${tokenResult}`
+                "Cookie": `token=${tokenResult}`
             }
         }
     );
@@ -96,11 +111,11 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
 
     console.log("\nDELETE request initiated again after deletion");//16633
 
-    const deleteResponse01=await request.delete(`/booking/${bookingID}`,
+    const deleteResponse01 = await request.delete(`/booking/${bookingID}`,
         {
             headers:
             {
-                "Cookie" : `token=${tokenResult}`
+                "Cookie": `token=${tokenResult}`
             }
         }
     );
@@ -113,6 +128,6 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
 
     console.log('\nDELETE request successfully done');
 
-    
+
 
 })
