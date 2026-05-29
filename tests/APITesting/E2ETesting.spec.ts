@@ -219,6 +219,113 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
 
     //------------------------------------------------------------
 
+    console.log("\nGET request initiated for Put Method");
+
+    const getStartTime2 = Date.now();
+
+    const getResponse2 = await request.get(`/booking/${bookingID}`);
+
+    const getEndTime2 = Date.now();
+
+    console.log('\nThe logging of second GET request is:');
+    console.log(getResponse2);
+
+    const getResponseBody2 = await getResponse2.json();
+
+    console.log('\nThe response of first GET request is:');
+    console.log(getResponseBody2);
+
+    console.log("\nPerforming some assertions");
+    expect(getResponse2.statusText()).toBe('OK');
+    expect(getResponse2.status()).toBe(200);
+
+    const getHeaders2 = getResponse2.headers();
+    expect(getHeaders2['content-type']).toContain("application/json; charset=utf-8");
+
+    const getResponseTime2 = getEndTime2 - getStartTime2;
+    console.log("\nResponse Time ===>", getResponseTime2);
+    expect(getResponseTime2).toBeLessThan(5000);
+
+    expect(getResponseBody2.firstname).toBe(putResponseBody.firstname);
+
+    expect(getResponseBody2).toMatchObject(
+        {
+            firstname: putRequestBody.firstname,
+            lastname: putRequestBody.lastname,
+            totalprice: putRequestBody.totalprice,
+            depositpaid: putRequestBody.depositpaid,
+            additionalneeds: putRequestBody.additionalneeds
+        }
+    );
+
+    expect(getResponseBody2.bookingdates).toMatchObject(
+        {
+            checkin: putRequestBody.bookingdates.checkin,
+            checkout: putRequestBody.bookingdates.checkout
+        }
+    )
+    console.log('\nAll assertions successfully done.');
+
+    console.log('\nGET request successfully done');
+
+    //------------------------------------------------------------
+
+    console.log('\nPATCH request initiated');
+
+    const putRequestBody = structuredClone(putSourceRequestBody);
+
+    const putStartTime = Date.now();
+
+    const putResponse = await request.put(`/booking/${bookingID}`,
+        {
+            data: putRequestBody,
+            headers:
+            {
+                "Content-Type": "application/json",
+                "Cookie": `token=${tokenResult}`
+            }
+        }
+    );
+
+    const putEndTime = Date.now();
+
+    console.log('\nThe logging of PUT request is:');
+    console.log(putResponse);
+
+    const putResponseBody = await putResponse.json();
+    console.log('\nThe response of PUT request is:');
+    console.log(putResponseBody);
+
+    console.log("Performing some assertions:");
+    expect(putResponse.statusText()).toBe('OK');
+    expect(putResponse.status()).toBe(200);
+
+    const putHeaders = putResponse.headers();
+    expect(putHeaders['content-type']).toContain("application/json; charset=utf-8");
+
+    const putResponseTime = putEndTime - putStartTime;
+    console.log("\nResponse Time ===>", putResponseTime);
+    expect(putResponseTime).toBeLessThan(5000);
+
+    expect(putResponseBody).toMatchObject(
+        {
+            firstname: putRequestBody.firstname,
+            lastname: putRequestBody.lastname,
+            totalprice: putRequestBody.totalprice,
+            depositpaid: putRequestBody.depositpaid,
+            additionalneeds: putRequestBody.additionalneeds
+        }
+    );
+    expect(putRequestBody.bookingdates).toMatchObject({
+        checkin: putRequestBody.bookingdates.checkin,
+        checkout: putRequestBody.bookingdates.checkout,
+    });
+    console.log('All assertions successfully done.');
+
+    console.log('\nPUT request successfully done');
+
+    //------------------------------------------------------------
+
     console.log("\nDELETE request initiated");
 
     const deleteResponse = await request.delete(`/booking/${bookingID}`,
