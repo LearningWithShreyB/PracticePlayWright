@@ -55,15 +55,19 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
 
     const postRequestBody = structuredClone(postSourceRequestBody);
 
-    const postStartTime=Date.now();
+    const postStartTime = Date.now();
 
     const postResponse = await request.post('/booking',
         {
-            data: postRequestBody
+            data: postRequestBody,
+            headers:
+            {
+                "Content-Type": "application/json"
+            }
         }
     );
 
-    const postEndTime=Date.now();
+    const postEndTime = Date.now();
 
     console.log('\nThe logging of POST request is:');
     console.log(postResponse);
@@ -110,11 +114,11 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
 
     console.log("\nGET request initiated for Post Method");
 
-    const getStartTime1=Date.now();
+    const getStartTime1 = Date.now();
 
     const getResponse1 = await request.get(`/booking/${bookingID}`);
 
-    const getEndTime1=Date.now();
+    const getEndTime1 = Date.now();
 
     console.log('\nThe logging of first GET request is:');
     console.log(getResponse1);
@@ -163,21 +167,26 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
 
     const putRequestBody = structuredClone(putSourceRequestBody);
 
-    const putStartTime=Date.now();
+    const putStartTime = Date.now();
 
-    const putResponse = await request.post(`/booking/${bookingID}`,
+    const putResponse = await request.put(`/booking/${bookingID}`,
         {
-            data: putRequestBody
+            data: putRequestBody,
+            headers:
+            {
+                "Content-Type": "application/json",
+                "Cookie": `token=${tokenResult}`
+            }
         }
     );
 
-    const putEndTime=Date.now();
+    const putEndTime = Date.now();
 
     console.log('\nThe logging of PUT request is:');
     console.log(putResponse);
 
     const putResponseBody = await putResponse.json();
-    console.log('\nThe response of POST request is:');
+    console.log('\nThe response of PUT request is:');
     console.log(putResponseBody);
 
     console.log("Performing some assertions:");
