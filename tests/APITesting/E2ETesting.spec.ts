@@ -5,6 +5,9 @@ import putSourceRequestBody from '../../testdata/put_request_body.json';
 import patchSourceRequestBody from '../../testdata/patch_request_body.json';
 
 test('Verifying E2E testing of CRUD operations', async ({ request }) => {
+
+    console.log('\n\x1b[1mPerforming End to End Testing of all operations\x1b[0m');
+
     console.log('\nGenerating the Token');
 
     const tokenRequestBody = structuredClone(tokenSourceRequestBody);
@@ -417,9 +420,11 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
 
     console.log('\nDELETE request successfully done');
 
+    //------------------------------------------------------------
+
     console.log("\nDELETE request initiated again after deletion");
 
-   const deleteStartTime2 = Date.now();
+    const deleteStartTime2 = Date.now();
 
     const deleteResponse2 = await request.delete(`/booking/${bookingID}`,
         {
@@ -456,5 +461,42 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
     console.log('All assertions successfully done.');
 
     console.log('\nDELETE request successfully done');
+
+    //------------------------------------------------------------
+
+    console.log("\nGET request initiated after performing DELETE request");
+
+    const getStartTime4 = Date.now();
+
+    const getResponse4 = await request.get(`/booking/${bookingID}`);
+
+    const getEndTime4 = Date.now();
+
+    console.log('\nThe logging of fourth GET request is:');
+    console.log(getResponse4);
+
+    const getResponseBody4 = await getResponse4.text();
+
+    console.log('\nThe response of fourth GET request is:');
+    console.log(getResponseBody4);
+
+    console.log("\nPerforming some assertions");
+    expect(getResponse4.statusText()).toBe('Not Found');
+    expect(getResponse4.status()).toBe(404);
+
+    const getHeaders4 = getResponse4.headers();
+    expect(getHeaders4['content-type']).toContain("text/plain; charset=utf-8");
+
+    const getResponseTime4 = getEndTime4 - getStartTime4;
+    console.log("\nResponse Time ===>", getResponseTime4);
+    expect(getResponseTime4).toBeLessThan(5000);
+
+    expect(getResponseBody4).toBe('Not Found');
+
+    console.log('\nAll assertions successfully done.');
+
+    console.log('\nGET request successfully done');
+
+    console.log('\n\x1b[1mEnd to End Testing of all operations has been successfully done\x1b[0m');
 
 })
