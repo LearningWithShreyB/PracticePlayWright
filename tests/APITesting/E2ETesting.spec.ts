@@ -379,7 +379,9 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
 
     console.log("\nDELETE request initiated");
 
-    const deleteResponse = await request.delete(`/booking/${bookingID}`,
+    const deleteStartTime1 = Date.now();
+
+    const deleteResponse1 = await request.delete(`/booking/${bookingID}`,
         {
             headers:
             {
@@ -388,10 +390,28 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
         }
     );
 
+    const deleteEndTime1 = Date.now();
+
+    console.log('\nThe logging of DELETE request is:');
+    console.log(deleteResponse1);
+
+    const deleteResponseBody1 = await deleteResponse1.text();
+
+    console.log('\nThe response of DELETE request is:');
+    console.log(deleteResponseBody1);
+
     console.log("\nPerforming some assertions");
-    expect(deleteResponse.ok()).toBeTruthy();
-    expect(deleteResponse.statusText()).toBe('Created');
-    expect(deleteResponse.status()).toBe(201);
+    expect(deleteResponse1.statusText()).toBe('Created');
+    expect(deleteResponse1.status()).toBe(201);
+
+    const deleteHeaders1 = deleteResponse1.headers();
+    expect(deleteHeaders1['content-type']).toContain("text/plain; charset=utf-8");
+
+    const deleteResponseTime1 = deleteEndTime1 - deleteStartTime1;
+    console.log("\nResponse Time ===>", deleteResponseTime1);
+    expect(deleteResponseTime1).toBeLessThan(5000);
+
+    expect(deleteResponseBody1).toBe('Created');
 
     console.log('All assertions successfully done.');
 
