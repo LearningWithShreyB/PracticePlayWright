@@ -417,9 +417,11 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
 
     console.log('\nDELETE request successfully done');
 
-    console.log("\nDELETE request initiated again after deletion");//16633
+    console.log("\nDELETE request initiated again after deletion");
 
-    const deleteResponse01 = await request.delete(`/booking/${bookingID}`,
+   const deleteStartTime2 = Date.now();
+
+    const deleteResponse2 = await request.delete(`/booking/${bookingID}`,
         {
             headers:
             {
@@ -428,14 +430,31 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
         }
     );
 
+    const deleteEndTime2 = Date.now();
+
+    console.log('\nThe logging of DELETE request is:');
+    console.log(deleteResponse2);
+
+    const deleteResponseBody2 = await deleteResponse2.text();
+
+    console.log('\nThe response of DELETE request is:');
+    console.log(deleteResponseBody2);
+
     console.log("\nPerforming some assertions");
-    expect(deleteResponse01.statusText()).toBe('Method Not Allowed');
-    expect(deleteResponse01.status()).toBe(405);
+    expect(deleteResponse2.statusText()).toBe('Method Not Allowed');
+    expect(deleteResponse2.status()).toBe(405);
+
+    const deleteHeaders2 = deleteResponse2.headers();
+    expect(deleteHeaders2['content-type']).toContain("text/plain; charset=utf-8");
+
+    const deleteResponseTime2 = deleteEndTime2 - deleteStartTime2;
+    console.log("\nResponse Time ===>", deleteResponseTime2);
+    expect(deleteResponseTime2).toBeLessThan(5000);
+
+    expect(deleteResponseBody2).toBe('Method Not Allowed');
 
     console.log('All assertions successfully done.');
 
     console.log('\nDELETE request successfully done');
-
-
 
 })
