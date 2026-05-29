@@ -232,7 +232,7 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
 
     const getResponseBody2 = await getResponse2.json();
 
-    console.log('\nThe response of first GET request is:');
+    console.log('\nThe response of second GET request is:');
     console.log(getResponseBody2);
 
     console.log("\nPerforming some assertions");
@@ -323,6 +323,57 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
     console.log('\nAll assertions successfully done.');
 
     console.log('\nPATCH request successfully done');
+
+    //------------------------------------------------------------
+
+    console.log("\nGET request initiated for Patch Method");
+
+    const getStartTime3 = Date.now();
+
+    const getResponse3 = await request.get(`/booking/${bookingID}`);
+
+    const getEndTime3 = Date.now();
+
+    console.log('\nThe logging of third GET request is:');
+    console.log(getResponse3);
+
+    const getResponseBody3 = await getResponse3.json();
+
+    console.log('\nThe response of third GET request is:');
+    console.log(getResponseBody3);
+
+    console.log("\nPerforming some assertions");
+    expect(getResponse3.statusText()).toBe('OK');
+    expect(getResponse3.status()).toBe(200);
+
+    const getHeaders3 = getResponse3.headers();
+    expect(getHeaders3['content-type']).toContain("application/json; charset=utf-8");
+
+    const getResponseTime3 = getEndTime3 - getStartTime3;
+    console.log("\nResponse Time ===>", getResponseTime3);
+    expect(getResponseTime3).toBeLessThan(5000);
+
+    expect(getResponseBody3.firstname).toBe(patchResponseBody.firstname);
+
+    expect(getResponseBody3).toMatchObject(
+        {
+            firstname: patchRequestBody.firstname,
+            lastname: patchRequestBody.lastname,
+            totalprice: putRequestBody.totalprice,
+            depositpaid: putRequestBody.depositpaid,
+            additionalneeds: patchRequestBody.additionalneeds
+        }
+    );
+
+    expect(getResponseBody3.bookingdates).toMatchObject(
+        {
+            checkin: putRequestBody.bookingdates.checkin,
+            checkout: putRequestBody.bookingdates.checkout
+        }
+    )
+    console.log('\nAll assertions successfully done.');
+
+    console.log('\nGET request successfully done');
 
     //------------------------------------------------------------
 
