@@ -2,37 +2,60 @@ import { test, expect } from '@playwright/test';
 import tokenSourceRequestBody from '../../testdata/token_request_body.json';
 import postSourceRequestBody from '../../testdata/post_request_body.json';
 import putSourceRequestBody from '../../testdata/put_request_body.json';
+import patchSourceRequestBody from '../../testdata/patch_request_body.json';
 
 test('Verifying E2E testing of CRUD operations', async ({ request }) => {
     console.log('\nGenerating the Token');
 
     const tokenRequestBody = structuredClone(tokenSourceRequestBody);
+    const tokenStartTime = Date.now();
 
     const tokenResponse = await request.post('/auth',
         {
-            data: tokenRequestBody
+            data: tokenRequestBody,
+            headers:
+            {
+                "Content-Type": "application/json"
+            }
         }
     );
+
+    const tokenEndTime = Date.now();
+
+    console.log('\nThe logging of Token-POST request is:');
+    console.log(tokenResponse);
 
     const tokenResponseBody = await tokenResponse.json();
     console.log('\nThe response of POST request is:');
     console.log(tokenResponseBody);
 
-    console.log("Performing some assertions:");
-    expect(tokenResponse.ok()).toBeTruthy();
+    console.log("\nPerforming some assertions:");
+    //expect(tokenResponse.ok()).toBeTruthy();
     expect(tokenResponse.status()).toBe(200);
+    expect(tokenResponse.statusText()).toBe('OK');
+
+    const tokenHeaders = tokenResponse.headers();
+    expect(tokenHeaders['content-type']).toContain("application/json; charset=utf-8");
+
+    const tokenResponseTime = tokenEndTime - tokenStartTime;
+    console.log("\nResponse Time ===>", tokenResponseTime);
+    expect(tokenResponseTime).toBeLessThan(5000);
 
     expect(tokenResponseBody).toHaveProperty('token');
-    console.log('All assertions successfully done.');
+    console.log('\nAll assertions successfully done.');
 
     const tokenResult = tokenResponseBody.token;
-    console.log(`Token ===> ${tokenResult}`);
+    console.log(`\nToken ===> ${tokenResult}`);
 
     console.log('\nToken successfully generated');
+
+    //------------------------------------------------------------
 
     console.log('\nPOST request initiated');
 
     const postRequestBody = structuredClone(postSourceRequestBody);
+
+    const postStartTime=Date.now();
 
     const postResponse = await request.post('/booking',
         {
@@ -40,13 +63,25 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
         }
     );
 
+    const postEndTime=Date.now();
+
+    console.log('\nThe logging of POST request is:');
+    console.log(postResponse);
+
     const postResponseBody = await postResponse.json();
     console.log('\nThe response of POST request is:');
     console.log(postResponseBody);
 
     console.log("Performing some assertions:");
-    expect(postResponse.ok()).toBeTruthy();
+    expect(postResponse.statusText()).toBe('OK');
     expect(postResponse.status()).toBe(200);
+
+    const postHeaders = postResponse.headers();
+    expect(postHeaders['content-type']).toContain("application/json; charset=utf-8");
+
+    const postResponseTime = postEndTime - postStartTime;
+    console.log("\nResponse Time ===>", postResponseTime);
+    expect(postResponseTime).toBeLessThan(5000);
 
     expect(postResponseBody).toHaveProperty("bookingid");
 
@@ -71,22 +106,38 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
 
     console.log('\nPOST request successfully done');
 
+    //------------------------------------------------------------
+
     console.log("\nGET request initiated for Post Method");
 
-    const getResponse = await request.get(`/booking/${bookingID}`);
+    const getStartTime1=Date.now();
 
-    const getResponseBody = await getResponse.json();
+    const getResponse1 = await request.get(`/booking/${bookingID}`);
 
-    console.log('\nThe response of GET request is:');
-    console.log(getResponseBody);
+    const getEndTime1=Date.now();
 
-    console.log("Performing some assertions");
-    expect(getResponse.ok()).toBeTruthy();
-    expect(getResponse.status()).toBe(200);
+    console.log('\nThe logging of first GET request is:');
+    console.log(getResponse1);
 
-    expect(getResponseBody.firstname).toBe(postResponseBody.booking.firstname);
+    const getResponseBody1 = await getResponse1.json();
 
-    expect(getResponseBody).toMatchObject(
+    console.log('\nThe response of first GET request is:');
+    console.log(getResponseBody1);
+
+    console.log("\nPerforming some assertions");
+    expect(getResponse1.statusText()).toBe('OK');
+    expect(getResponse1.status()).toBe(200);
+
+    const getHeaders1 = getResponse1.headers();
+    expect(getHeaders1['content-type']).toContain("application/json; charset=utf-8");
+
+    const getResponseTime1 = getEndTime1 - getStartTime1;
+    console.log("\nResponse Time ===>", getResponseTime1);
+    expect(getResponseTime1).toBeLessThan(5000);
+
+    expect(getResponseBody1.firstname).toBe(postResponseBody.booking.firstname);
+
+    expect(getResponseBody1).toMatchObject(
         {
             firstname: postRequestBody.firstname,
             lastname: postRequestBody.lastname,
@@ -96,15 +147,68 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
         }
     );
 
-    expect(getResponseBody.bookingdates).toMatchObject(
+    expect(getResponseBody1.bookingdates).toMatchObject(
         {
             checkin: postRequestBody.bookingdates.checkin,
             checkout: postRequestBody.bookingdates.checkout
         }
     )
-    console.log('All assertions successfully done.');
+    console.log('\nAll assertions successfully done.');
 
     console.log('\nGET request successfully done');
+
+    //------------------------------------------------------------
+
+    console.log('\nPUT request initiated');
+
+    const putRequestBody = structuredClone(putSourceRequestBody);
+
+    const putStartTime=Date.now();
+
+    const putResponse = await request.post(`/booking/${bookingID}`,
+        {
+            data: putRequestBody
+        }
+    );
+
+    const putEndTime=Date.now();
+
+    console.log('\nThe logging of PUT request is:');
+    console.log(putResponse);
+
+    const putResponseBody = await putResponse.json();
+    console.log('\nThe response of POST request is:');
+    console.log(putResponseBody);
+
+    console.log("Performing some assertions:");
+    expect(putResponse.statusText()).toBe('OK');
+    expect(putResponse.status()).toBe(200);
+
+    const putHeaders = putResponse.headers();
+    expect(putHeaders['content-type']).toContain("application/json; charset=utf-8");
+
+    const putResponseTime = putEndTime - putStartTime;
+    console.log("\nResponse Time ===>", putResponseTime);
+    expect(putResponseTime).toBeLessThan(5000);
+
+    expect(putResponseBody).toMatchObject(
+        {
+            firstname: putRequestBody.firstname,
+            lastname: putRequestBody.lastname,
+            totalprice: putRequestBody.totalprice,
+            depositpaid: putRequestBody.depositpaid,
+            additionalneeds: putRequestBody.additionalneeds
+        }
+    );
+    expect(putRequestBody.bookingdates).toMatchObject({
+        checkin: putRequestBody.bookingdates.checkin,
+        checkout: putRequestBody.bookingdates.checkout,
+    });
+    console.log('All assertions successfully done.');
+
+    console.log('\nPUT request successfully done');
+
+    //------------------------------------------------------------
 
     console.log("\nDELETE request initiated");
 
