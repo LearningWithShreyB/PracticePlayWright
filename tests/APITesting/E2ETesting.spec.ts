@@ -76,7 +76,7 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
     console.log('\nThe response of POST request is:');
     console.log(postResponseBody);
 
-    console.log("Performing some assertions:");
+    console.log("\nPerforming some assertions:");
     expect(postResponse.statusText()).toBe('OK');
     expect(postResponse.status()).toBe(200);
 
@@ -103,10 +103,10 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
         checkin: postRequestBody.bookingdates.checkin,
         checkout: postRequestBody.bookingdates.checkout,
     });
-    console.log('All assertions successfully done.');
+    console.log('\nAll assertions successfully done.');
 
     const bookingID = postResponseBody.bookingid;
-    console.log(`Booking ID ===> ${bookingID}`);
+    console.log(`\nBooking ID ===> ${bookingID}`);
 
     console.log('\nPOST request successfully done');
 
@@ -189,7 +189,7 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
     console.log('\nThe response of PUT request is:');
     console.log(putResponseBody);
 
-    console.log("Performing some assertions:");
+    console.log("\nPerforming some assertions:");
     expect(putResponse.statusText()).toBe('OK');
     expect(putResponse.status()).toBe(200);
 
@@ -213,7 +213,7 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
         checkin: putRequestBody.bookingdates.checkin,
         checkout: putRequestBody.bookingdates.checkout,
     });
-    console.log('All assertions successfully done.');
+    console.log('\nAll assertions successfully done.');
 
     console.log('\nPUT request successfully done');
 
@@ -272,13 +272,13 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
 
     console.log('\nPATCH request initiated');
 
-    const putRequestBody = structuredClone(putSourceRequestBody);
+    const patchRequestBody = structuredClone(patchSourceRequestBody);
 
-    const putStartTime = Date.now();
+    const patchStartTime = Date.now();
 
-    const putResponse = await request.put(`/booking/${bookingID}`,
+    const patchResponse = await request.patch(`/booking/${bookingID}`,
         {
-            data: putRequestBody,
+            data: patchRequestBody,
             headers:
             {
                 "Content-Type": "application/json",
@@ -287,42 +287,42 @@ test('Verifying E2E testing of CRUD operations', async ({ request }) => {
         }
     );
 
-    const putEndTime = Date.now();
+    const patchEndTime = Date.now();
 
-    console.log('\nThe logging of PUT request is:');
-    console.log(putResponse);
+    console.log('\nThe logging of PATCH request is:');
+    console.log(patchResponse);
 
-    const putResponseBody = await putResponse.json();
-    console.log('\nThe response of PUT request is:');
-    console.log(putResponseBody);
+    const patchResponseBody = await patchResponse.json();
+    console.log('\nThe response of PATCH request is:');
+    console.log(patchResponseBody);
 
-    console.log("Performing some assertions:");
-    expect(putResponse.statusText()).toBe('OK');
-    expect(putResponse.status()).toBe(200);
+    console.log("\nPerforming some assertions:");
+    expect(patchResponse.statusText()).toBe('OK');
+    expect(patchResponse.status()).toBe(200);
 
-    const putHeaders = putResponse.headers();
-    expect(putHeaders['content-type']).toContain("application/json; charset=utf-8");
+    const patchHeaders = patchResponse.headers();
+    expect(patchHeaders['content-type']).toContain("application/json; charset=utf-8");
 
-    const putResponseTime = putEndTime - putStartTime;
-    console.log("\nResponse Time ===>", putResponseTime);
-    expect(putResponseTime).toBeLessThan(5000);
+    const patchResponseTime = patchEndTime - patchStartTime;
+    console.log("\nResponse Time ===>", patchResponseTime);
+    expect(patchResponseTime).toBeLessThan(5000);
 
-    expect(putResponseBody).toMatchObject(
+    expect(patchResponseBody).toMatchObject(
         {
-            firstname: putRequestBody.firstname,
-            lastname: putRequestBody.lastname,
+            firstname: patchRequestBody.firstname,
+            lastname: patchRequestBody.lastname,
             totalprice: putRequestBody.totalprice,
             depositpaid: putRequestBody.depositpaid,
-            additionalneeds: putRequestBody.additionalneeds
+            additionalneeds: patchRequestBody.additionalneeds
         }
     );
     expect(putRequestBody.bookingdates).toMatchObject({
         checkin: putRequestBody.bookingdates.checkin,
         checkout: putRequestBody.bookingdates.checkout,
     });
-    console.log('All assertions successfully done.');
+    console.log('\nAll assertions successfully done.');
 
-    console.log('\nPUT request successfully done');
+    console.log('\nPATCH request successfully done');
 
     //------------------------------------------------------------
 
