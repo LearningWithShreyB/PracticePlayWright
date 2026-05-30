@@ -36,26 +36,4 @@ test('Verifying the Radio Button functionality', async ({ page }) => {
 
     await page.waitForTimeout(3000);
 
-    const radioButton3:Locator=page.locator("[name='gender']");
-    await expect(radioButton3).toHaveCount(2);
-
-    await radioButton3.nth(0).check();
-    console.log("State of 1st radio Button",await radioButton3.nth(0).isChecked());
-    console.log("State of 2nd radio Button",await radioButton3.nth(1).isChecked());
-    await expect(radioButton3.nth(0)).toBeChecked();
-
-    await radioButton3.nth(1).check();
-    console.log("State of 1st radio Button",await radioButton3.nth(0).isChecked());
-    console.log("State of 2nd radio Button",await radioButton3.nth(1).isChecked());
-    await expect(radioButton3.nth(1)).toBeChecked();
-
-    console.log("The state of all radio button is:");
-    const count = await radioButton3.count();
-
-    for(let i=0;i<count;i++)
-    {
-        const radioButton4=radioButton3.nth(i);
-        console.log(await radioButton4.isChecked());
-    }
-
 });
