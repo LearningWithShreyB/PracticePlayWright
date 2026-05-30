@@ -17,6 +17,7 @@ test('Verifying the TextBox functionality',async({page})=>
 
     await expect(textBox).toHaveAttribute('maxlength','15');
 
+    //Method1
     /* await textBox.fill('Playwright');
     await expect(textBox).toHaveValue('Playwright');
 
@@ -25,6 +26,7 @@ test('Verifying the TextBox functionality',async({page})=>
     const value=await textBox.inputValue();
     expect(value).toBe('Typescript'); */
 
+    //Method2
     await textBox.fill('Playwright');
     await expect(textBox).toHaveValue('Playwright');
 
