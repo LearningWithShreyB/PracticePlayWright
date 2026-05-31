@@ -42,6 +42,12 @@ test('Verifying the checkbox functionality - Part2', async ({ page }) => {
         }
     }
 
+    for(const i of[1,3,6])
+    {
+        await checkboxes[i].check();
+        await expect(checkboxes[i]).toBeChecked();
+    }
+
 
 
 });
