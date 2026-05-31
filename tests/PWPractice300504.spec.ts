@@ -16,14 +16,26 @@ test('Verifying the checkbox functionality - Part2', async ({ page }) => {
         await expect(checkbox).toBeChecked();
         await page.waitForTimeout(1000);
     }
-    await page.waitForTimeout(2000);
 
     for (const checkbox of checkboxes.slice(-2)) {
         await checkbox.uncheck();
         await expect(checkbox).not.toBeChecked();
         await page.waitForTimeout(1000);
     }
-    await page.waitForTimeout(2000);
+
+
+    for (const checkbox of checkboxes) {
+        if (await checkbox.isChecked()) {
+            await checkbox.uncheck();
+            await expect(checkbox).not.toBeChecked();
+            await page.waitForTimeout(1000);
+        }
+        else {
+            await checkbox.check();
+            await expect(checkbox).toBeChecked();
+            await page.waitForTimeout(1000);
+        }
+    }
 
 
 
