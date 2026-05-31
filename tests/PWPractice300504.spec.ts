@@ -9,7 +9,12 @@ test('Verifying the checkbox functionality - Part2', async ({ page }) => {
 
     await checkboxes[2].check();
     await expect(checkboxes[2]).toBeChecked();
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(1000);
+
+    const weekname='Tuesday';
+    await page.getByLabel(weekname).uncheck();
+    await expect(page.getByLabel(weekname)).not.toBeChecked();
+
 
     for (const checkbox of checkboxes) {
         await checkbox.check();
