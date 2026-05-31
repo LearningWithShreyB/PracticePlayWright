@@ -1,6 +1,6 @@
 import { test, expect, Locator } from '@playwright/test';
 
-test('Verifying the checkbox functionality', async ({ page }) => {
+test('Verifying the checkbox functionality - Part1', async ({ page }) => {
     await page.goto("https://testautomationpractice.blogspot.com/");
 
     const checkBox1: Locator = page.locator('#sunday');
