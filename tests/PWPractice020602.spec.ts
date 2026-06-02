@@ -27,9 +27,9 @@ test('Verifying duplicate elements of dropdown', async ({ page }) => {
 
     if(duplicates.length>0)
     {
-        console.log("Duplicate options found.", duplicates)
+        console.log("Duplicate options found.", duplicates);
     }
     else{
-        console.log("No duplicate options found..")
+        console.log("No duplicate options found..");
     }
 });
