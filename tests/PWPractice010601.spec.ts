@@ -16,6 +16,12 @@ test('Performing the dropdown testing - Part01', async({page})=>{
 
     await expect(res01).toHaveCount(10);
 
+    const ddOptions:Array<string>=(await res01.allTextContents()).map(res02=>res02.trim());
+    console.log(ddOptions);
+
+    for(const res03 of ddOptions){
+        console.log(res03);
+    }
     
     
 
