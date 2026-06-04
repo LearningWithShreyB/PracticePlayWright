@@ -11,8 +11,8 @@ test('Verifying the dropdown - Part2', async ({ page }) => {
     const name: Locator = page.locator("p.shelf-item__title");
     const price: Locator = page.locator('div.val');
 
-    console.log("The name of all the elements:", await name.allInnerTexts());
-    console.log("The price of all the elements:", await price.allTextContents());
+    /* console.log("The name of all the elements:", await name.allInnerTexts());
+    console.log("The price of all the elements:", await price.allTextContents()); */
 
     const nameString: string[] = await name.allTextContents();
     const priceString: Array<string> = await price.allInnerTexts();
@@ -25,6 +25,9 @@ test('Verifying the dropdown - Part2', async ({ page }) => {
     for (let i = 0; i < priceString.length; i++) {
         console.log(`${nameString[i]} : ${priceString[i]}`);
     }
+
+    console.log(`The lowest price and and name of the product is ${nameString[0]} whose corresponding price is ${priceString[0]}`);
+    console.log(`The highest price and and name of the product is ${nameString[nameString.length-1]} whose corresponding price is ${priceString[priceString.length-1]}`);
 
 
 });
