@@ -3,7 +3,9 @@ import { test, expect, Locator } from '@playwright/test';
 test('Verifying auto-suggested dropdown of Amazon', async ({ page }) => {
     await page.goto("https://www.amazon.in/");
 
-    await page.locator("#twotabsearchtextbox").fill('apple');
+    await page.locator("input[placeholder='Username']").fill('Admin');
+    await page.locator("input[placeholder='Password']").fill('admin123');
+    await page.locator("button[type='submit']").click();
 
     const options: Locator = page.locator("div[role='rowgroup'] div[role='button']");
     await expect(options.first()).toBeVisible({ timeout: 5000 });
