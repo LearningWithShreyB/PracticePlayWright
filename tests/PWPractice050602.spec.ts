@@ -8,18 +8,18 @@ test('Verifying auto-suggested dropdown of Amazon', async ({ page }) => {
     await page.locator("button[type='submit']").click();
 
     await page.getByText('PIM').click();
-
-    const options: Locator = page.locator("div.oxd-select-text-input");
     await page.waitForTimeout(3000);
-   // await expect(options.first()).toBeVisible({ timeout: 5000 });
-    const count: number = await options.count();
+
+    await page.locator("form i").nth(1).click();
+    await expect(dropdown1.first()).toBeVisible({ timeout: 3000 });
+    const count: number = await dropdown1.count();
     for (let i = 0; i < count; i++) {
-        const text = await options.nth(i).innerText();
+        const text = await dropdown1.nth(i).innerText();
         if (text === 'Automation Tester1') {
-            options.nth(i).click();
+            dropdown1.nth(i).click();
         }
     }
 
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(3000); 
 
 });
