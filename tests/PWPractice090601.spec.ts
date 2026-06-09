@@ -38,5 +38,22 @@ test('Verifying static table',async({page})=>{
         console.log(dataRows.join(" | "))
     }
 
+    console.log("\nPrint book names where author is Amit");
+
+    const result:string[]=[];
+    for(let data of rowData){
+        const authorName=await data.locator("td").nth(1).innerText();
+        //console.log(authorName)
+        const bookName=await data.locator("td").first().innerText();
+        //console.log(bookName)
+
+        if(authorName==='Amit'){
+            console.log(`${bookName} | ${authorName}`);
+            result.push(bookName);
+        }
+    }
+
+    expect(result).toHaveLength(2);
+
 
 });
