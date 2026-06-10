@@ -1,6 +1,6 @@
 import { test, expect, Locator } from '@playwright/test';
 
-test('Verifying the Dynamic Table', async ({ page }) => {
+test('Verifying the Dynamic Table for CPU Load', async ({ page }) => {
     await page.goto("https://testautomationpractice.blogspot.com/");
     const table: Locator = page.locator('#taskTable tbody');
     await expect(table).toBeVisible();
@@ -31,5 +31,38 @@ test('Verifying the Dynamic Table', async ({ page }) => {
 
     expect(cpuLoadText).toBe(cpuLoad);
 
-
 });
+
+test.only('Verifying the Dynamic Table for Memory Size',async({page})=>{
+    await page.goto("https://testautomationpractice.blogspot.com/");
+    const table: Locator = page.locator('#taskTable tbody');
+    await expect(table).toBeVisible();
+
+    const tableRows: Locator[] = await table.locator("tr").all();
+    expect(tableRows).toHaveLength(4);
+
+    let memorySize = '';
+
+    for (let row of tableRows) {
+        const name: string = await row.locator('td').first().innerText();
+
+        if (name === 'Firefox') {
+            memorySize = await row.locator("td:has-text('MB')").innerText();
+            console.log('The CPU Load of chrome is:', memorySize);
+            break;
+        }
+    }
+
+    const memorySizeText: string = await page.locator(".memorySize").innerText();
+
+    if (memorySizeText === memorySize) {
+        console.log("Good Job!!");
+    }
+    else {
+        console.log("Try again!!");
+    }
+
+    expect(memorySizeText).toBe(memorySize);
+
+
+})
