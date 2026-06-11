@@ -33,7 +33,7 @@ test('Verifying the Dynamic Table for CPU Load', async ({ page }) => {
 
 });
 
-test.only('Verifying the Dynamic Table for Memory Size',async({page})=>{
+test('Verifying the Dynamic Table for Memory Size',async({page})=>{
     await page.goto("https://testautomationpractice.blogspot.com/");
     const table: Locator = page.locator('#taskTable tbody');
     await expect(table).toBeVisible();
@@ -47,13 +47,13 @@ test.only('Verifying the Dynamic Table for Memory Size',async({page})=>{
         const name: string = await row.locator('td').first().innerText();
 
         if (name === 'Firefox') {
-            memorySize = await row.locator("td:has-text('MB')").innerText();
-            console.log('The CPU Load of chrome is:', memorySize);
+            memorySize = await row.locator("td",{hasText:/MB$/}).innerText();
+            console.log('The Memory Size of firefox is:', memorySize);
             break;
         }
     }
 
-    const memorySizeText: string = await page.locator(".memorySize").innerText();
+    const memorySizeText: string = await page.locator(".firefox-memory").innerText();
 
     if (memorySizeText === memorySize) {
         console.log("Good Job!!");
