@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('Verifying search results across pagination', async ({ page }) => {
-    const searchTerm = 'San';
+    const searchTerm = '4';
 
     // 1. Navigate to the page
     await page.goto("https://datatables.net/examples/basic_init/zero_configuration.html");
