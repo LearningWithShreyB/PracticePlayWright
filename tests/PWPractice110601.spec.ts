@@ -31,6 +31,8 @@ test('Verifying the Dynamic Table for CPU Load', async ({ page }) => {
 
     expect(cpuLoadText).toBe(cpuLoad);
 
+    await page.waitForTimeout(3000);
+
 });
 
 test('Verifying the Dynamic Table for Memory Size',async({page})=>{
@@ -64,5 +66,6 @@ test('Verifying the Dynamic Table for Memory Size',async({page})=>{
 
     expect(memorySizeText).toBe(memorySize);
 
+    await page.waitForTimeout(3000);
 
 })
