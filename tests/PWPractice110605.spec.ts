@@ -8,16 +8,18 @@ test('Verifying the pagination table',async({page})=>
     expect(tableRows).toHaveLength(10); */
 
     let hasMorePages=true;
+    let totalRecords=0
 
     while(hasMorePages){
         const tableRows=await page.locator(".display tbody tr").all();
+        totalRecords+=tableRows.length;
         for(let row of tableRows){
             const cellTexts = await row.locator('td').allInnerTexts();
             console.log(cellTexts.join(' | '));
         }
 
-        const next=page.locator("button[aria-label='Last']");
-        const isDisabled=await next.getAttribute('class');
+        const last=page.locator("button[aria-label='Last']");
+        const isDisabled=await last.getAttribute('class');
 
         await page.waitForTimeout(3000);
 
@@ -25,8 +27,9 @@ test('Verifying the pagination table',async({page})=>
             hasMorePages=false;
         }
         else{
-            await next.click();
+            await last.click();
         }
     }
+    console.log(`The total number of records are ${totalRecords}`);
 
 });
