@@ -18,18 +18,17 @@ test('Verifying the pagination table', async ({ page }) => {
     console.log("The total number of rows/ flights are:", count);
     expect(count).toBeGreaterThan(0);
 
-    const tableRowsArray: Locator[] = await page.locator(".table tbody tr").all();
-
-    let price;
-
-    for (let row of tableRowsArray) {
-        price = await row.locator('td').nth(5).innerText();
-        console.log(price);
-    }
-
-    await page.waitForTimeout(3000);
-
-
-
+    const prices: string[] = [];
+      for (let i = 0; i < count; i++) {
+        const price = await tableRows.nth(i).locator('td').nth(5).innerText(); 
+        prices.push(price);
+      }
+    
+      console.log('Flight Prices:', prices);
+      const sortedPrices = [...prices].sort();
+      console.log('Sorted Price:', sortedPrices);
+      const lowestPrice = sortedPrices[0];
+      console.log('Lowest Price:', lowestPrice);
+      expect(lowestPrice).toBeDefined();
 
 })
