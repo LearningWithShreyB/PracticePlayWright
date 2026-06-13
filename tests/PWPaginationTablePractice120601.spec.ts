@@ -27,7 +27,7 @@ test('Verifying the pagination table', async ({ page }) => {
             await tableRows[i].locator('td').nth(3).locator('input').click();
         }
 
-        console.log(`--- all dropdowns of ${currentPageIndex} are clicked ---`);
+        console.log(`--- all dropdowns of page ${currentPageIndex} are clicked ---`);
 
         await page.waitForTimeout(3000);
 
