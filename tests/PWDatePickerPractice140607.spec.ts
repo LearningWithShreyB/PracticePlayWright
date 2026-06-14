@@ -47,6 +47,25 @@ test('Verifying the Date Picker Part-06', async ({ page }) => {
     await radio02.check();
     await expect(radio01).toBeChecked();
 
+    const radio03 = page.locator("#traveltype_1");
+    await radio03.check();
+    await expect(radio01).toBeChecked();
+
+    await page.locator("#fromcity").fill("Toronto");
+
+    await page.locator("#tocity").fill("Mumbai");
+
+    const datePicker01 = page.locator("#departon");
+    await datePicker01.click();
+
+    const month01 = 'Nov';
+    const year01 = '2026';
+    const date01 = '26';
+
+    await selectDate(month01, date01, year01, page);
+
+    await expect(datePicker01).toHaveValue("26/11/2026");
+
     await page.waitForTimeout(3000);
 
 
