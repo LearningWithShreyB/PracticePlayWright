@@ -108,12 +108,13 @@ test('Verifying the Date Picker Part-06', async ({ page }) => {
     await expect(page.locator('#select2-billing_state-container')).toHaveText('Ontario');
     await expect(page.locator('#billing_postcode')).toHaveValue('L2C 6M1');
 
-    const productName=page.locator('.product-details');
-        await expect(productName).toHaveText("Dummy ticket for Visa Application");
-    
-        const productPrice=page.locator('.shop_table.woocommerce-checkout-review-order-table tfoot tr:nth-child(2) td');
-        await expect(productPrice).toHaveText("₹1,200");
+    const productName = page.locator('.product-details');
+    await expect(productName).toHaveText("Dummy ticket for Visa Application");
 
+    const productPrice = page.locator('.shop_table.woocommerce-checkout-review-order-table tfoot tr:nth-child(2) td');
+    await expect(productPrice).toHaveText("₹1,200");
+
+    await page.locator("#place_order").click();
 
     await page.waitForTimeout(3000);
 
