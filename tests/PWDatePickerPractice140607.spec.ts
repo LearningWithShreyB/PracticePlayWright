@@ -1,6 +1,6 @@
-import { test, expect, Locator } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
 
-async function selectDate(targetMonth: string, targetDate: string, targetYear: string, page: Page,) {
+async function selectDate(targetMonth: string, targetDate: string, targetYear: string, page:Page) {
 
     const monthDropdown = page.locator("select.ui-datepicker-month");
     await monthDropdown.selectOption({ label: targetMonth });
