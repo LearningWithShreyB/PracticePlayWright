@@ -5,7 +5,19 @@ test('Verifying Frames-Part01', async ({ page }) => {
     const frames = page.frames();
     console.log("The number of frames are:", frames.length);
 
-    const frame3=page.frame({url:'https://ui.vision/demo/webtest/frames/frame_3.html'});
+    const text = page.locator("input[name='mytext3']");
+    text.fill("Welcome!!");
+    expect(text).toHaveAttribute('type');
+
+    const frame=page.frame({url:"https://docs.google.com/forms/d/1k8PNZrtmCzZi6mW6z-9k4_h4ZSFakJLWseITLyAwp9k/viewform?embedded=true"})
+
+    if(frame){
+        await frame.getByLabel('I am a human').check();
+    }
+    else{
+        console.log("No frame is available..");
+    }
+    /* const frame3=page.frame({url:'https://ui.vision/demo/webtest/frames/frame_3.html'});
     
       if(frame3){
           await frame3.locator("[name='mytext3']").fill("Welcome");
@@ -17,7 +29,7 @@ test('Verifying Frames-Part01', async ({ page }) => {
        }
         else{
             console.log("Frame 3 is not found..")
-        }
+        } */
 
     /* const text = page.locator("input[name='mytext3']");
     text.fill("Welcome!!");
