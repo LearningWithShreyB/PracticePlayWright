@@ -11,14 +11,14 @@ test('Verifying the Prompt Dialog for Default Value',async({page})=>
         expect(dialog.message()).toContain("Please enter your name:");
         console.log("The default value of dialog box is",dialog.defaultValue());
         expect(dialog.defaultValue()).toBe("Harry Potter");
-        dialog.accept("John");
+        dialog.dismiss();
     });
 
 
     await page.locator("#promptBtn").click();
     const text=await page.locator("#demo").innerText();
     console.log("The text is:",text);
-    expect(page.locator("#demo")).toContainText("John");
+    expect(page.locator("#demo")).toHaveText("User cancelled the prompt.");
 
     await page.waitForTimeout(3000);
 });
