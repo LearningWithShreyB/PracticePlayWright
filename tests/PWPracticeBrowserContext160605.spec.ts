@@ -12,9 +12,9 @@ test('Testing Browser Context', async ({browser}) => {
 
     await page1.waitForTimeout(3000);
 
-    await page1.goto('https://www.selenium.dev/');
-    await expect(page1).toHaveTitle(/Selenium/);
+    await page2.goto('https://www.selenium.dev/');
+    await expect(page2).toHaveTitle(/Selenium/);
 
-    await page1.waitForTimeout(3000);
+    await page2.waitForTimeout(3000);
 
 });
