@@ -1,0 +1,25 @@
+import { test, expect, chromium, firefox, webkit, Page, Locator} from '@playwright/test';
+
+test('Testing Browser Context', async () => {
+
+    const browser = await chromium.launch();
+    const context = await browser.newContext();
+    const parentPage = await context.newPage();
+    console.log("No of pages created:", context.pages().length);
+
+    await parentPage.goto('https://testautomationpractice.blogspot.com/');
+    await expect(parentPage).toHaveTitle(/Automation/);
+
+    const [childPage]=await Promise.all([context.waitForEvent('page'),parentPage.locator("button:has-Text('New Tab')").click()]);
+
+    
+    const pages=context.pages();
+    console.log("No of pages created:", context.pages().length);
+
+    const text:Locator=pages[1].locator("h1:has-Text(' SDET-QA Blog')");
+    await expect(text).toBeVisible();
+
+    console.log("Title of Parent Page:",await pages[0].title());
+    console.log("Title of Child Page:",await pages[1].title());
+    await parentPage.waitForTimeout(3000);
+});

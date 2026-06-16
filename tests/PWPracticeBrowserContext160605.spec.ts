@@ -16,5 +16,4 @@ test('Testing Browser Context', async ({browser}) => {
     await expect(page2).toHaveTitle(/Selenium/);
 
     await page2.waitForTimeout(3000);
-
 });
