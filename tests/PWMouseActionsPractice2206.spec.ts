@@ -13,5 +13,14 @@ test('Verifying Mouse Actions-Mouse Hover',async({page})=>{
     await expect(btn02).toBeVisible();
     await page.waitForTimeout(2000);
 
+});
 
-})
+test.only('Verifying Mouse Actions-Right click',async({page})=>{
+    await page.goto("http://swisnl.github.io/jQuery-contextMenu/demo.html");
+
+    const btn03:Locator= page.locator(".context-menu-one");
+    await btn03.click({button:'right'});
+    await expect(btn03).toHaveText('right click me');
+    await page.waitForTimeout(2000);
+
+});
