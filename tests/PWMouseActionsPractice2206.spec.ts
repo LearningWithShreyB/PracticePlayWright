@@ -6,6 +6,12 @@ test('Verifying Mouse Actions-Mouse Hover',async({page})=>{
     const btn01:Locator= page.locator(".dropbtn");
     await btn01.hover();
     await expect(btn01).toBeVisible();
+    await page.waitForTimeout(2000);
 
-    await page.waitForTimeout(3000);
+    const btn02:Locator= page.getByRole('link',{name:'Mobiles'});
+    await btn02.hover();
+    await expect(btn02).toBeVisible();
+    await page.waitForTimeout(2000);
+
+
 })
