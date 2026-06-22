@@ -15,12 +15,24 @@ test('Verifying Mouse Actions-Mouse Hover',async({page})=>{
 
 });
 
-test.only('Verifying Mouse Actions-Right click',async({page})=>{
+test('Verifying Mouse Actions-Right click',async({page})=>{
     await page.goto("http://swisnl.github.io/jQuery-contextMenu/demo.html");
 
     const btn03:Locator= page.locator(".context-menu-one");
     await btn03.click({button:'right'});
     await expect(btn03).toHaveText('right click me');
+    await page.waitForTimeout(2000);
+
+});
+
+test.only('Verifying Mouse Actions-Double click',async({page})=>{
+    await page.goto("https://testautomationpractice.blogspot.com/");
+
+    const btn04:Locator= page.getByText("Copy Text");
+    await btn04.dblclick();
+    await expect(btn04).toBeEnabled();
+    const text=page.locator("#field2");
+    await expect(text).toHaveValue("Hello World!");
     await page.waitForTimeout(2000);
 
 });
