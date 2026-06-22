@@ -6,8 +6,18 @@ test('Infinite Scrolling', async ({ page }) => {
     test.slow();
 
     let previousHeight = 0;
+    let bookFound = false;
 
     while (true) {
+
+        const title = await page.locator(".book_display h3").allInnerTexts();
+
+        if (title.includes('The Book of Dust')) {
+            console.log("Book Found!!");
+            bookFound = true;
+            expect(bookFound).toBeTruthy();
+            break;
+        }
         await page.evaluate(() => {
             window.scrollTo(0, document.body.scrollHeight);
         });
@@ -30,4 +40,7 @@ test('Infinite Scrolling', async ({ page }) => {
     }
 
     console.log('Reached end of page.');
+    if (!bookFound) {
+        console.log("Book Not Found!!");
+    }
 });
