@@ -37,7 +37,7 @@ test('Verifying Mouse Actions-Double click', async ({ page }) => {
 
 });
 
-test.only('Verifying Mouse Actions-Drag & Drop', async ({ page }) => {
+test('Verifying Mouse Actions-Drag & Drop_1', async ({ page }) => {
     await page.goto("https://testautomationpractice.blogspot.com/");
 
     const source = page.locator('#draggable');
@@ -49,6 +49,22 @@ test.only('Verifying Mouse Actions-Drag & Drop', async ({ page }) => {
     await page.mouse.down();
     await target.hover();
     await page.mouse.up();
+
+    await expect(target).toHaveText('Dropped!');
+
+    await page.waitForTimeout(2000);
+
+});
+
+test.only('Verifying Mouse Actions-Drag & Drop_2', async ({ page }) => {
+    await page.goto("https://testautomationpractice.blogspot.com/");
+
+    const source = page.locator('#draggable');
+    const target = page.locator("#droppable");
+
+    await expect(target).toHaveText('Drop here');
+
+    await source.dragTo(target);
 
     await expect(target).toHaveText('Dropped!');
 
