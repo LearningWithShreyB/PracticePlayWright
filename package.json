@@ -7,7 +7,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type1": "commonjs",
+  "type": "module",
   "devDependencies": {
     "@playwright/test": "^1.60.0",
     "@types/node": "^25.9.0"
